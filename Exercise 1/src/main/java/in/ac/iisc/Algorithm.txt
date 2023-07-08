@@ -1,0 +1,15 @@
+for each class C in project {
+    if (C is of type REMOTE && C carries an annotation A in {@Entity, @Table})
+        remove annotation A
+
+    for each attribute U in class C {
+        if (C is of type REMOTE && U carries an annotation A in {@Column, @JoinColumn, @*To*}) {
+            remove annotation A
+        }
+        if (attribute U is of type T and T is REMOTE) {
+            replace U's type T with RemoteObject<T>
+        } else if (U is of type List<T> and T is REMOTE) {
+            replace U's type T with RemoteList<T>
+        }
+    }
+}
